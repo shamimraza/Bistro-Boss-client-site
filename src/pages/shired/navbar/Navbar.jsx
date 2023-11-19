@@ -1,6 +1,20 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { FaCartArrowDown } from "react-icons/fa";
+import useCarts from "../../../hooks/useCarts";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCarts();
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   const navItems = (
     <>
       <li>
@@ -12,6 +26,31 @@ const Navbar = () => {
       <li>
         <Link to="/order/salad">Order Now</Link>
       </li>
+      <li>
+        <Link to="/secret">Secret </Link>
+      </li>
+      <li>
+        <Link to="/dashboard/cart">
+          <button className="btn mr-2">
+            <FaCartArrowDown></FaCartArrowDown>
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
+        </Link>
+      </li>
+
+      {user ? (
+        <>
+          <button onClick={handleLogOut} className="btn  btn-ghost">
+            LogOut
+          </button>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -37,7 +76,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-red-500 text-white rounded-box w-52"
             >
               {navItems}
             </ul>

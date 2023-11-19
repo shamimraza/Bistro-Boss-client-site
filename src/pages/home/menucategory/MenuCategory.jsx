@@ -5,7 +5,7 @@ import MenuItemCard from "../../shired/menuitem/MenuItemCard";
 const MenuCategory = ({ items, title, img }) => {
   return (
     <div className="pt-8 relative">
-      {title && <Cover img={img} title="Our menu"></Cover>}
+      {title && <Cover img={img} title={title}></Cover>}
       <div className="bg-black opacity-20 h-[300px] w-9/12 flex flex-col ml-44 items-center justify-center -mt-[500px] absolute"></div>
       <div className="grid md:grid-cols-2 gap-3 my-16">
         {items.map((item) => (
