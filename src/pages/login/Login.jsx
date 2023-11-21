@@ -11,9 +11,11 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
 import loginImg from "../../assets/others/authentication1.png";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
 
   const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
@@ -42,6 +44,22 @@ const Login = () => {
         timer: 1500,
       });
       navigate(from, { replace: true });
+    });
+  };
+
+  // google signIn
+
+  const handleGoogleSignIn = () => {
+    googleSignIn().then((result) => {
+      console.log(result.user);
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+      };
+      axiosPublic.post("/users", userInfo).then((res) => {
+        console.log(res.data);
+        navigate("/");
+      });
     });
   };
 
@@ -128,7 +146,7 @@ const Login = () => {
               <button>
                 <FaGithub></FaGithub>
               </button>
-              <button>
+              <button onClick={handleGoogleSignIn}>
                 <FaGoogle></FaGoogle>
               </button>
               <button>

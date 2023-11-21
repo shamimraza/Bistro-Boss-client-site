@@ -11,8 +11,8 @@ import DashBoard from "../layout/DashBoard";
 import Cart from "../pages/dashboard/Cart/Cart";
 import HomeD from "../pages/dashboard/homed/HomeD";
 import Reservation from "../pages/dashboard/Reservation";
-import Reviews from "../pages/dashboard/Reviews";
-import ListItems from "../pages/dashboard/ListItems";
+import Reviews from "../pages/dashboard/AllUsers";
+import AllUsers from "../pages/dashboard/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -51,11 +51,21 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashBoard></DashBoard>,
+    element: (
+      <PrivetRoutes>
+        <DashBoard></DashBoard>
+      </PrivetRoutes>
+    ),
     children: [
       {
         path: "cart",
         element: <Cart></Cart>,
+      },
+
+      // admin routes
+      {
+        path: "users",
+        element: <AllUsers></AllUsers>,
       },
       {
         path: "homed",
@@ -68,10 +78,6 @@ export const router = createBrowserRouter([
       {
         path: "review",
         element: <Reviews></Reviews>,
-      },
-      {
-        path: "list",
-        element: <ListItems></ListItems>,
       },
     ],
   },
